@@ -28,7 +28,7 @@ Configure your API URL.
 If you'd like to use .env file, put it in root project folder with the structure below
 
 ```bash
-REACT_APP_API_URL=your_api_url
+REACT_APP_API=your_api_url
 ```
 
 By default, API URL will be `http://localhost:3000`
