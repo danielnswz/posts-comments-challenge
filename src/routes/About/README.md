@@ -9,7 +9,9 @@ Author: Daniel Klie
 
 # Clone this project by tipying
 
-git clone https://github.com/danielnswz/
+```bash
+git clone https://github.com/danielnswz/sweatworks-challenge-fe
+```
 
 # Install dependencies
 
