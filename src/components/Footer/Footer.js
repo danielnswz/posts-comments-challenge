@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Footer({ description }) {
+const Footer = () => {
 	const classes = useStyles();
 
 	return (
@@ -32,14 +31,12 @@ export default function Footer({ description }) {
 					color='textSecondary'
 					component='p'
 				>
-					{description}
+					{`You are in a **${process.env.REACT_APP_ENV_NAME.toLocaleLowerCase()}** version of this app.`}
 				</Typography>
 				<Copyright />
 			</Container>
 		</footer>
 	);
-}
-
-Footer.propTypes = {
-	description: PropTypes.string,
 };
+
+export default Footer;

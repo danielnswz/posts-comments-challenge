@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -21,8 +20,12 @@ const useStyles = makeStyles((theme) => ({
 		flexShrink: 0,
 	},
 }));
+const sections = [
+	{ title: 'Home', url: '/' },
+	{ title: 'About', url: '/about' },
+];
 
-const Header = ({ sections, title }) => {
+const Header = () => {
 	const classes = useStyles();
 
 	return (
@@ -36,7 +39,7 @@ const Header = ({ sections, title }) => {
 					noWrap
 					className={classes.toolbarTitle}
 				>
-					{title}
+					{'Sweatworks Challenge'}
 				</Typography>
 			</Toolbar>
 			<Toolbar
@@ -58,11 +61,6 @@ const Header = ({ sections, title }) => {
 			</Toolbar>
 		</React.Fragment>
 	);
-};
-
-Header.propTypes = {
-	sections: PropTypes.array,
-	title: PropTypes.string,
 };
 
 export default Header;
