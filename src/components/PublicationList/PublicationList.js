@@ -1,7 +1,7 @@
 import React from 'react';
-import Publication from '../Publication';
 import { Grid } from '@material-ui/core';
 import Error from '../Error';
+import Publication from '../Publication';
 
 const PublicationList = ({ loading, publications, errors }) => {
 	return (

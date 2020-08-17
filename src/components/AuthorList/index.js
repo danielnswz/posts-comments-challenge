@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import AuthorList from './AuthorList';
+import { fetchAuthors } from '../../store/authors/actionCreators';
 import {
 	getAuthorLoading,
 	getAuthorsData,
 } from '../../store/authors/selectors';
-import { fetchAuthors } from '../../store/authors/actionCreators';
+import AuthorList from './AuthorList';
 
 const mapStateToProps = (state) => ({
 	loading: getAuthorLoading(state),

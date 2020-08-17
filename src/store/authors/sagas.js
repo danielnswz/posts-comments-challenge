@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { get as _get } from 'lodash';
 import RequestService from '../../utils/RequestService';
 import * as actions from './actionCreators';
 import * as actionTypes from './actionTypes';
@@ -6,10 +7,8 @@ import * as actionTypes from './actionTypes';
 function* getAuthorsRequest() {
 	const url = '/authors';
 	const method = 'get';
-	const applicationComponent = 'employee';
-	const { feature } = actionTypes;
 
-	yield put(actions.apiRequest({ method, url, feature, applicationComponent }));
+	yield put(actions.apiRequest({ method, url }));
 
 	try {
 		const { response } = yield call(RequestService, {
@@ -21,24 +20,19 @@ function* getAuthorsRequest() {
 			return yield put(actions.apiSuccess({ response: response.payload }));
 		}
 
-		const error =
-			response.messages.length > 0
-				? response.messages[0]
-				: 'Authors not available';
+		const error = _get(response, 'messages[0]', 'Authors not available.');
+
 		return yield put(
 			actions.apiError({
 				error,
 			})
 		);
 	} catch (error) {
-		const message =
-			error &&
-			error.response &&
-			error.response.data &&
-			error.response.data.messages &&
-			error.response.data.messages.length > 0
-				? error.response.data.messages[0]
-				: 'Service unavailable.';
+		const message = _get(
+			error,
+			'response.data.messages[0]',
+			'Service unavailable.'
+		);
 
 		return yield put(
 			actions.apiError({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Card, Box, Typography } from '@material-ui/core';
+import { Box, Card, Grid, Typography } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import moment from 'moment';
 import { Link, useHistory } from 'react-router-dom';

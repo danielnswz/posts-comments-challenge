@@ -3,8 +3,8 @@ import {
 	searchPublication,
 	setSortBy,
 } from '../../store/publications/actionCreators';
-import Home from './Home';
 import { getSortBy } from '../../store/publications/selectors';
+import Home from './Home';
 
 const mapStateToProps = (state) => ({
 	sortBy: getSortBy(state),

@@ -46,9 +46,6 @@ function* getPublicationRequest({ id }) {
 	}
 }
 function* getPublicationFlow({ payload = { id: null } }) {
-	// if (payload.id) {
-	// 	yield call(payload.history.push, `/publication/${payload.id}`);
-	// }
 	const {
 		payload: { error = '', response },
 	} = yield call(getPublicationRequest, { id: payload.id });

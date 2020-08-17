@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Input, Button } from '@material-ui/core';
-import AuthorList from '../../components/AuthorList';
-import PublicationList from '../../components/PublicationList';
+import React, { useEffect, useState } from 'react';
+import { Button, Grid, Input } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import SearchIcon from '@material-ui/icons/Search';
+import AuthorList from '../../components/AuthorList';
+import PublicationList from '../../components/PublicationList';
 
 const Home = ({ searchPublication, sortBy, setSortBy }) => {
 	const [searchTerms, setSearchTerms] = useState('');

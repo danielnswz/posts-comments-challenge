@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import PublicationList from './PublicationList';
-import {
-	getPublicationsLoading,
-	getPublicationsData,
-	getPublicationErrors,
-} from '../../store/publications/selectors';
 import { fetchPublications } from '../../store/publications/actionCreators';
+import {
+	getPublicationErrors,
+	getPublicationsData,
+	getPublicationsLoading,
+} from '../../store/publications/selectors';
+import PublicationList from './PublicationList';
 
 const mapStateToProps = (state) => ({
 	loading: getPublicationsLoading(state),
