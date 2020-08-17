@@ -4,7 +4,6 @@ Web client using React, Redux, Redux-Saga, axios, material-ui, reselect, lodash,
 
 Author: Daniel Klie
 
-<!-- [Visit app deployed on AWS Amplify](https://master.d1ex534y3v53v6.amplifyapp.com/) -->
 
 ## 1 - Install
 
