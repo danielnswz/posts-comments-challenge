@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# Sweatworks Challenge - Frontend
+# Authors-Publications Challenge - Frontend
 
 Web client using React, Redux, Redux-Saga, axios, material-ui, reselect, lodash, moment, marked, query-string, etc.
 
@@ -12,7 +12,7 @@ Author: Daniel Klie
 # Clone this project by tipying
 
 ```bash
-git clone https://github.com/danielnswz/sweatworks-challenge-fe
+git clone https://github.com/danielnswz/authors-publications-challenge-fe
 ```
 
 # Install dependencies
