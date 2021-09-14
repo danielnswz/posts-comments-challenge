@@ -1,6 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-import 'fontsource-roboto';
+import React from "react";
+import ReactDOM from "react-dom";
+import { App } from "./App";
+import "fontsource-roboto";
+import "./index.scss";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
