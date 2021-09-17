@@ -10,9 +10,9 @@ import {
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { usePostsList } from "./PostsLists.hooks";
-import "./PostsLists.scss";
 import { PostComments } from "./PostComments";
 import { AddComment } from "./AddComment";
+import "./PostsLists.scss";
 
 export const PostsLists: React.FC = () => {
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);

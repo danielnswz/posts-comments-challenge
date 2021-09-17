@@ -22,15 +22,9 @@ export const apiError = ({ error, list = true }: IError) => ({
 });
 
 export const setPosts = (data: IPost[]) => {
-  const dataNormalized = data.reduce((ac: any, cv: any) => {
-    return {
-      ...ac,
-      [cv.id]: { ...cv, comments: [] },
-    };
-  }, {});
   return {
     type: actionTypes.SET_POSTS,
-    payload: dataNormalized,
+    payload: data,
   };
 };
 

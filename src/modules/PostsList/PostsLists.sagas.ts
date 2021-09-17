@@ -60,18 +60,19 @@ function* getPostsFlow({ payload: { id } }: IGetPostsFlow): any {
 
     if (!error) {
       if (!id) {
-        return yield put(actions.setPosts(response));
+        const dataNormalized = response.reduce((ac: any, cv: any) => {
+          return {
+            ...ac,
+            [cv.id]: { ...cv, comments: [] },
+          };
+        }, {});
+        return yield put(actions.setPosts(dataNormalized));
       }
       const dataNormalized = {
         ...list,
         [Number(id)]: {
           ...list[Number(id)],
-          comments: [
-            ...list[Number(id)]?.comments.map((el: any, index: number) => {
-              return { ...el };
-            }),
-            ...response,
-          ],
+          comments: [...list[Number(id)]?.comments, ...response],
         },
       };
       return yield put(actions.setSelectedPost(dataNormalized));

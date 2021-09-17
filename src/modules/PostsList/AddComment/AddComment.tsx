@@ -1,12 +1,12 @@
 import React from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField } from "@material-ui/core";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./AddComment.schema";
 import { useAppDispatch } from "../../common/hooks";
 import { addCommentAction } from "./AddComment.actionCreators";
-import { schema } from "./AddComment.schema";
-import "./AddComment.scss";
 import { FormData } from "./types";
+import "./AddComment.scss";
 
 interface Props {
   postId: number | null;
