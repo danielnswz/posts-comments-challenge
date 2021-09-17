@@ -1,44 +1,47 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "./PostsLists.actionCreators";
 import {
   getPostsData,
+  getPostsErrors,
   getPostsLoading,
-  getSelectedPost,
   getSelectedPostLoading,
 } from "./PostsLists.selectors";
+import {
+  useAppSelector as useSelector,
+  useAppDispatch as useDispatch,
+} from "../common/hooks";
+import { IPost } from "./types";
 
 interface HookResponse {
-  posts: Array<any>;
+  posts: IPost[];
   isPostsLoading: boolean;
-  selectedPost: any;
   isSelectedPostLoading: boolean;
+  errors: any;
 }
-
-/* function usePrevious(value: any) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-} */
 
 export const usePostsList = (selectedPostId: number | null): HookResponse => {
   const dispatch = useDispatch();
-  const posts = useSelector(getPostsData);
-  const isPostsLoading = useSelector(getPostsLoading);
-  const selectedPost = useSelector(getSelectedPost);
-  const isSelectedPostLoading = useSelector(getSelectedPostLoading);
-  //   const prevSelectedPostId = usePrevious(selectedPostId);
+  const posts = useSelector<IPost[]>(getPostsData);
+  const isPostsLoading = useSelector<boolean>(getPostsLoading);
+  const isSelectedPostLoading = useSelector<boolean>(getSelectedPostLoading);
+  const errors = useSelector(getPostsErrors);
 
   useEffect(() => {
-    dispatch(fetchPosts(selectedPostId));
+    dispatch(fetchPosts(null) as any);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (selectedPostId) {
+      dispatch(fetchPosts(selectedPostId) as any);
+    }
   }, [selectedPostId, dispatch]);
 
   return {
     posts,
     isPostsLoading,
-    selectedPost,
     isSelectedPostLoading,
+    errors,
   };
 };

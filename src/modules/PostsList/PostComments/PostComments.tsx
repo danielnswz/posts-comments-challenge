@@ -1,14 +1,15 @@
 import { Card, CardContent } from "@material-ui/core";
 import React from "react";
+import { IComment } from "../types";
 
 interface Props {
-  comments: any[];
+  comments: IComment[];
 }
 export const PostComments: React.FC<Props> = ({ comments }) => {
   return (
     <>
       {comments &&
-        comments.map((el: any) => {
+        comments.map((el: IComment) => {
           return (
             <Card key={el.id} variant="outlined">
               <CardContent>

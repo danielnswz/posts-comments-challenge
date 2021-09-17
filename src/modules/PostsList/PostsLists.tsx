@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Button,
   Card,
@@ -12,14 +12,20 @@ import { Skeleton } from "@material-ui/lab";
 import { usePostsList } from "./PostsLists.hooks";
 import "./PostsLists.scss";
 import { PostComments } from "./PostComments";
-import { AddComment } from "./AddComment/AddComment";
+import { AddComment } from "./AddComment";
 
 export const PostsLists: React.FC = () => {
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
   const [open, setOpen] = useState<number | null>(null);
 
-  const { posts, isPostsLoading, isSelectedPostLoading } =
+  const { posts, isPostsLoading, isSelectedPostLoading, errors } =
     usePostsList(selectedPostId);
+
+  const defaultArray = useMemo(() => {
+    return Array(8)
+      .fill("")
+      .map((_, i) => i + 1);
+  }, []);
 
   return (
     <>
@@ -30,12 +36,13 @@ export const PostsLists: React.FC = () => {
         alignItems="center"
         spacing={2}
       >
+        {errors && errors.map((error: any) => <p>{error.error}</p>)}
         {posts &&
           Object.entries(posts).map(([key, el]: any) => {
             return (
               <div className="post-item" key={key}>
-                <Grid item style={{ width: "100%" }}>
-                  <Card style={{ padding: 10, width: "100%" }}>
+                <Grid item className="post-item__container">
+                  <Card className="post-item__card">
                     <CardHeader title={`${el.id} - ${el.title}`} />
                     <CardContent>
                       <p>{el.body}</p>
@@ -77,12 +84,12 @@ export const PostsLists: React.FC = () => {
             );
           })}
         {isPostsLoading &&
-          new Array(8).fill("").map((el: any, index: number) => {
+          defaultArray.map((el: number) => {
             return (
-              <Grid key={index} item style={{ width: "100%" }}>
-                <Card style={{ padding: 10, width: "100%" }}>
-                  <Skeleton style={{ padding: "16px" }} />
-                  <Skeleton style={{ padding: "16px" }} />
+              <Grid key={el} item className="post-item__container">
+                <Card className="post-item__card">
+                  <Skeleton height={80} />
+                  <Skeleton height={80} />
                 </Card>
               </Grid>
             );

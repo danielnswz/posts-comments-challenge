@@ -1,0 +1,12 @@
+.add-comment-form {
+    display: flex;
+    flex-direction: column;
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+    }
+    &__error {
+        color: red;
+    }
+}

@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useAppDispatch } from "../../common/hooks";
 import { addCommentAction } from "./AddComment.actionCreators";
+import { schema } from "./AddComment.schema";
+import "./AddComment.scss";
+import { FormData } from "./types";
 
 interface Props {
   postId: number | null;
@@ -9,56 +14,75 @@ interface Props {
 }
 
 export const AddComment: React.FC<Props> = ({ postId, handleClose }) => {
-  const [state, setState] = useState({ name: "", email: "", body: "" });
-  const dispatch = useDispatch();
-  const handleFieldChange = (e: any, type: string) => {
-    setState((prev) => {
-      return {
-        ...prev,
-        [type]: e.target.value,
-      };
-    });
-  };
-  const handleSubmit = () => {
-    dispatch(addCommentAction(postId, state));
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+  const dispatch = useAppDispatch();
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    dispatch(addCommentAction({ ...data, postId: Number(postId) }) as any);
     handleClose();
   };
+
   return (
     <>
       <h2 id="simple-modal-title">{`Add a comment to post nro: ${postId}`}</h2>
-      <form
-        style={{ display: "inline-flex", flexDirection: "column", gap: "12px" }}
-      >
-        <TextField
+      <form className="add-comment-form">
+        <Controller
           name="name"
-          id="outlined-basic"
-          label="name"
-          variant="outlined"
-          onChange={(e) => handleFieldChange(e, "name")}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              <TextField
+                onChange={onChange}
+                value={value}
+                label={"Name"}
+                error={!!errors.name?.message}
+                variant="outlined"
+              />
+              <p className="add-comment-form__error">{errors.name?.message}</p>
+            </>
+          )}
         />
-        <TextField
+        <Controller
           name="email"
-          id="outlined-basic"
-          label="email"
-          variant="outlined"
-          onChange={(e) => handleFieldChange(e, "email")}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              <TextField
+                onChange={onChange}
+                value={value}
+                label={"Email"}
+                error={!!errors.email?.message}
+                variant="outlined"
+              />
+              <p className="add-comment-form__error">{errors.email?.message}</p>
+            </>
+          )}
         />
-        <TextField
+        <Controller
           name="body"
-          id="outlined-multiline-static"
-          label="body"
-          multiline
-          rows={4}
-          defaultValue=""
-          variant="outlined"
-          onChange={(e) => handleFieldChange(e, "body")}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <>
+              <TextField
+                onChange={onChange}
+                value={value}
+                label={"Body"}
+                error={!!errors.body?.message}
+                multiline
+                rows={4}
+                variant="outlined"
+              />
+              <p className="add-comment-form__error">{errors.body?.message}</p>
+            </>
+          )}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleSubmit()}
-        >
-          Add
+        <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+          Submit
         </Button>
       </form>
     </>

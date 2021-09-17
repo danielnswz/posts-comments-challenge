@@ -1,14 +1,14 @@
+import { IComment, IPost } from "../types";
 import * as actionTypes from "./AddComment.actionTypes";
 
-/* MOVE THIS TO A SAGA */
-export const addCommentAction = (id: number | null, data: any) => {
+export const addCommentAction = (data: IComment) => {
   return {
     type: actionTypes.ADD_COMMENT,
-    payload: { id, data },
+    payload: data,
   };
 };
 
-export const setCommentAction = ({ data }: any) => {
+export const setCommentAction = (data: IPost[]) => {
   return {
     type: actionTypes.SET_COMMENT,
     payload: data,

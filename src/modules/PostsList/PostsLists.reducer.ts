@@ -1,18 +1,23 @@
 import * as actionTypes from "./PostsLists.actionTypes";
 import * as commentActionTypes from "./AddComment/AddComment.actionTypes";
+import { PayloadAction } from "@reduxjs/toolkit";
 
-export const initialState = {
+interface IPostState {
+  data: any;
+  errors: any[];
+  loading: boolean;
+  selectedLoading: boolean;
+}
+export const initialState: IPostState = {
   data: {},
   errors: [],
-  selected: {
-    postId: null,
-    loading: false,
-    errors: [],
-    data: null,
-  },
+  selectedLoading: false,
   loading: false,
 };
-export const postsReducer = (state = initialState, { type, payload }: any) => {
+export const postsReducer = (
+  state = initialState,
+  { type, payload }: PayloadAction
+) => {
   switch (type) {
     case actionTypes.SET_POSTS: {
       return { ...state, data: payload };
@@ -30,30 +35,17 @@ export const postsReducer = (state = initialState, { type, payload }: any) => {
         loading: false,
       };
     }
-    case actionTypes.SET_SELECTED_POST: {
-      return {
-        ...state,
-        selected: {
-          ...state.selected,
-          data: payload,
-          postId: payload?.[0].postId || null,
-        },
-      };
-    }
     case actionTypes.API_REQUEST: {
-      return { ...state, selected: { ...state.selected, loading: true } };
+      return { ...state, selectedLoading: true };
     }
     case actionTypes.API_SUCCESS: {
-      return { ...state, selected: { ...state.selected, loading: false } };
+      return { ...state, selectedLoading: false };
     }
     case actionTypes.API_FAILURE: {
       return {
         ...state,
-        selected: {
-          ...state.selected,
-          errors: [payload],
-          loading: false,
-        },
+        errors: [payload],
+        loading: false,
       };
     }
     case commentActionTypes.SET_COMMENT: {

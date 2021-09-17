@@ -1,11 +1,12 @@
 import { ActionType } from "@redux-saga/types";
 import { get as _get } from "lodash";
 import { Action } from "redux";
-import { call, put, takeLatest, delay, select } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 import RequestService from "../../utils/RequestService";
 import * as actions from "./PostsLists.actionCreators";
 import * as actionTypes from "./PostsLists.actionTypes";
 import { getPostsData } from "./PostsLists.selectors";
+import { validate as uuidValidate } from "uuid";
 
 interface IGetPostRequest {
   data: { id: number | null };
@@ -22,11 +23,12 @@ function* getPostRequest({ data: { id } }: IGetPostRequest): any {
     url,
   });
 
-  yield delay(1000);
-
-  if (response) {
+  if (response?.success) {
     return yield put(
-      actions.apiSuccess({ response, list: !commentsUrl }) as Action
+      actions.apiSuccess({
+        response: response.data,
+        list: !commentsUrl,
+      }) as Action
     );
   }
 
@@ -48,8 +50,8 @@ interface IGetPostsFlow {
 }
 function* getPostsFlow({ payload: { id } }: IGetPostsFlow): any {
   const list = yield select(getPostsData);
-  const areLocal = (list[String(id)]?.comments || []).every(
-    (el: any) => el?.local
+  const areLocal = list[Number(id)]?.comments.every((el: any) =>
+    uuidValidate(el.id)
   );
   if (!list[String(id)]?.comments?.length || areLocal) {
     const {
@@ -57,11 +59,22 @@ function* getPostsFlow({ payload: { id } }: IGetPostsFlow): any {
     } = yield call(getPostRequest, { data: { id } });
 
     if (!error) {
-      return yield put(
-        !id
-          ? actions.setPosts({ data: response })
-          : actions.setSelectedPost({ list, data: response })
-      );
+      if (!id) {
+        return yield put(actions.setPosts(response));
+      }
+      const dataNormalized = {
+        ...list,
+        [Number(id)]: {
+          ...list[Number(id)],
+          comments: [
+            ...list[Number(id)]?.comments.map((el: any, index: number) => {
+              return { ...el };
+            }),
+            ...response,
+          ],
+        },
+      };
+      return yield put(actions.setSelectedPost(dataNormalized));
     }
   }
 }
